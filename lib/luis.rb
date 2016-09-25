@@ -1,16 +1,21 @@
 require 'luis/version'
-require 'luis/response'
+require 'luis/base'
+require 'luis/result'
+require 'luis/intent'
+require 'luis/action'
+require 'luis/parameter'
+require 'luis/dialog'
 require 'httparty'
 module Luis
   include HTTParty
   class << self
    attr_accessor :id, :subscription_key
   end
-  API_URL = 'https://api.projectoxford.ai/luis/v1/application'.freeze
+  API_URL = 'https://api.projectoxford.ai/luis/v1/application/preview'.freeze
 
   def self.query(query)
     response = get(API_URL, query: { 'id' => id, 'subscription-key' => subscription_key, 'q' => query })
-    Response.new JSON.parse(response.body)
+    Result.new JSON.parse(response.body)
   end
 
   def self.configure(*_args)
