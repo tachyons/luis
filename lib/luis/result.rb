@@ -16,6 +16,10 @@ module Luis
       Dialog.new @dialog
     end
 
+    def entities
+      @entities.map { |entity| Entity.new entity }
+    end
+
     def awaiting_dialog_response?
       dialog && (dialog['status'] == 'Question')
     end

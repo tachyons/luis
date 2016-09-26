@@ -1,12 +1,14 @@
 require 'luis/version'
-require 'luis/base'
-require 'luis/result'
-require 'luis/intent'
-require 'luis/action'
-require 'luis/parameter'
-require 'luis/dialog'
 require 'httparty'
 module Luis
+  autoload :Base, 'luis/base'
+  autoload :Result, 'luis/result'
+  autoload :Intent, 'luis/intent'
+  autoload :Action, 'luis/action'
+  autoload :Parameter, 'luis/parameter'
+  autoload :Dialog, 'luis/dialog'
+  autoload :Entity, 'luis/entity'
+
   include HTTParty
   class << self
    attr_accessor :id, :subscription_key
@@ -18,7 +20,7 @@ module Luis
     Result.new JSON.parse(response.body)
   end
 
-  def self.configure(*_args)
+  def self.configure(options = {})
     options.each do |key, value|
       instance_variable_set("@#{key}", value)
     end
