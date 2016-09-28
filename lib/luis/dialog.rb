@@ -1,6 +1,6 @@
 module Luis
   class Dialog < Base
-    attr_accessor :prompt, :parameterName, :parameterType, :contentId, :status
+    attr_accessor :prompt, :parameterName, :parameterType, :contextId, :status
 
     def finished?
       status == 'Finished'
@@ -8,6 +8,10 @@ module Luis
 
     def question?
       status == 'Question'
+    end
+
+    def reply(query)
+      Luis.query(query, contextId)
     end
   end
 end

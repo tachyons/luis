@@ -15,8 +15,11 @@ module Luis
   end
   API_URL = 'https://api.projectoxford.ai/luis/v1/application/preview'.freeze
 
-  def self.query(query)
-    response = get(API_URL, query: { 'id' => id, 'subscription-key' => subscription_key, 'q' => query })
+  def self.query(query, context_id = nil)
+    options = default_options
+    options['q'] = query
+    options['contextId'] = context_id if context_id
+    response = get(API_URL, query: options)
     Result.new JSON.parse(response.body)
   end
 
@@ -25,5 +28,11 @@ module Luis
       instance_variable_set("@#{key}", value)
     end
     yield(self) if block_given?
+  end
+
+  private
+
+  def self.default_options
+    { 'id' => id, 'subscription-key' => subscription_key }
   end
 end

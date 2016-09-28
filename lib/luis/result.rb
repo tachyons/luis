@@ -21,7 +21,12 @@ module Luis
     end
 
     def awaiting_dialog_response?
-      dialog && (dialog['status'] == 'Question')
+      dialog && dialog.question?
+    end
+
+    def reply(query)
+      return false unless awaiting_dialog_response?
+      dialog.reply(query)
     end
   end
 end
