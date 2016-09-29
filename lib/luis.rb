@@ -12,9 +12,15 @@ module Luis
 
   include HTTParty
   class << self
-   attr_accessor :id, :subscription_key
+   attr_accessor :id, :subscription_key, :is_preview_mod, :is_verbose
   end
-  API_URL = 'https://api.projectoxford.ai/luis/v1/application/preview'.freeze
+  API_BASE_URI = 'https://api.projectoxford.ai/luis/v1/application'.freeze
+
+  def self.api_uri
+    uri = API_BASE_URI
+    uri += '/preview' if is_preview_mod
+    uri
+  end
 
   # Query method for the luis
   #
@@ -24,7 +30,7 @@ module Luis
     options = default_options
     options['q'] = query
     options['contextId'] = context_id if context_id
-    response = get(API_URL, query: options)
+    response = get(api_uri, query: options)
     Result.new JSON.parse(response.body)
   end
 
@@ -39,6 +45,8 @@ module Luis
   end
 
   def self.default_options
-    { 'id' => id, 'subscription-key' => subscription_key }
+    options = { 'id' => id, 'subscription-key' => subscription_key }
+    options['verbose'] = true if is_verbose
+    options
   end
 end

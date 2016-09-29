@@ -24,6 +24,7 @@ Or install it yourself as:
 Luis.configure do |config|
  config.id = "<id>"
  config.subscription_key ="<key>"
+ config.preview_mod = true
 end
 ```
 
