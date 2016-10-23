@@ -1,12 +1,12 @@
 module Luis
   # Luis result class
   class Result < Base
-    attr_accessor :query, :intents, :entities, :dialog, :top_scoring_indent
+    attr_accessor :query, :intents, :entities, :dialog, :top_scoring_intent
 
     # Intent with maximum score
     # @return intent with maximum score
     def top_scoring_intent
-      @topScoringIndent ||= @intents.first
+      Intent.new(@top_scoring_intent) || @intents.first
     end
 
     # List of intents
@@ -18,12 +18,18 @@ module Luis
 
     # Dialog object
     def dialog
+      return false unless @dialog
       Dialog.new @dialog
     end
 
     # List of entities
     def entities
       @entities.map { |entity| Entity.new entity }
+    end
+
+    # Entitities with specific type
+    def entities_of_type(type)
+      @entities.select {|entity| entity['type'] == type }.map {|entity| Entity.new entity}
     end
 
     # Weather dialog is waiting for a response
