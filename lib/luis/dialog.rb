@@ -1,7 +1,7 @@
 module Luis
   # Luis dialog class
   class Dialog < Base
-    attr_accessor :prompt, :parameterName, :parameterType, :contextId, :status
+    attr_accessor :prompt, :parameter_name, :parameter_type, :context_id, :status
 
     # @return whether the dialog is finished
     def finished?
