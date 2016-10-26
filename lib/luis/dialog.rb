@@ -16,7 +16,7 @@ module Luis
     # Reply to dialog
     # @param reply message
     def reply(query)
-      Luis.query(query, contextId)
+      Luis.query(query, context_id)
     end
   end
 end
