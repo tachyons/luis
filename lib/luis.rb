@@ -17,7 +17,7 @@ module Luis
   API_BASE_URI = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/%{id}'.freeze
 
   def self.api_uri
-    uri = format(API_BASE_URI, id: id)
+    uri = API_BASE_URI % {id: id}
     uri += '/preview' if is_preview_mod
     uri
   end
