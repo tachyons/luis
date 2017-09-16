@@ -29,7 +29,7 @@ module Luis
 
     # Entitities with specific type
     def entities_of_type(type)
-      @entities.select {|entity| entity['type'] == type }.map {|entity| Entity.new entity}
+      @entities.select { |entity| entity['type'] == type }.map { |entity| Entity.new entity }
     end
 
     # Weather dialog is waiting for a response

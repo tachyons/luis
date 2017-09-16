@@ -12,12 +12,12 @@ module Luis
 
   include HTTParty
   class << self
-   attr_accessor :id, :subscription_key, :app_id, :is_preview_mod, :is_verbose
+   attr_accessor :id, :subscription_key, :is_preview_mod, :is_verbose
   end
   API_BASE_URI = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/%{id}'.freeze
 
   def self.api_uri
-    uri = API_BASE_URI % {id: app_id}
+    uri = format(API_BASE_URI, id: id)
     uri += '/preview' if is_preview_mod
     uri
   end
@@ -45,7 +45,7 @@ module Luis
   end
 
   def self.default_options
-    options = {'subscription-key' => subscription_key }
+    options = { 'subscription-key' => subscription_key }
     options['verbose'] = true if is_verbose
     options
   end
