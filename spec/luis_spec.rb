@@ -18,7 +18,7 @@ describe Luis do
        config.subscription_key = '123';
        config.id = '456'
      end
-     VCR.use_cassette("bus time") do
+     VCR.use_cassette("bus time", record: :once) do
        expect(Luis.query('Bus time').top_scoring_intent).not_to be_nil
      end
   end
