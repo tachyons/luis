@@ -1,3 +1,3 @@
 module Luis
-  VERSION = '0.1.1beta'.freeze
+  VERSION = '0.1.1'.freeze
 end
