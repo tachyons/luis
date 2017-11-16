@@ -12,14 +12,17 @@ module Luis
 
   include HTTParty
   class << self
-   attr_accessor :id, :subscription_key, :is_preview_mod, :is_verbose
+    attr_accessor :id, :subscription_key, :is_staging, :is_verbose, :region
   end
-  API_BASE_URI = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/%{id}'.freeze
+  API_BASE_URI = 'https://%{region}.api.cognitive.microsoft.com/luis/v2.0/apps/%{id}'.freeze
 
   def self.api_uri
-    uri = API_BASE_URI % {id: id}
-    uri += '/preview' if is_preview_mod
-    uri
+    API_BASE_URI % {id: id, region: region}
+  end
+
+  def self.is_preview_mod= value
+    warn "[DEPRECATION] `is_preview_mod` is deprecated.  Please use `is_staging` instead."
+    self.is_staging = value
   end
 
   # Query method for the luis
@@ -45,8 +48,9 @@ module Luis
   end
 
   def self.default_options
-    options = { 'subscription-key' => subscription_key }
+    options = { 'subscription-key' => subscription_key, 'region' => 'westus' }
     options['verbose'] = true if is_verbose
+    options['staging'] = true if is_staging
     options
   end
 end
